@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.1.3-upgrade-uuid-9.29/dist/amazon-cognito-identity.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1333.0/aws-sdk.min.js"></script>
+
+<script>
+
+var poolData = { UserPoolId : 'ap-northeast-1_3UORQIdHF',
+  ClientId : '430p7s6tvg98grqddofojvlbi6'
+};
+var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+var attributeList = [];
+
+var dataEmail = {
+    Name : 'email',
+    Value : 'jococ76353@terkoer.com'
+};
+var dataPhoneNumber = {
+    Name : 'phone_number',
+    Value : '+15555555555'
+};
+var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+var attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(dataPhoneNumber);
+
+attributeList.push(attributeEmail);
+attributeList.push(attributePhoneNumber);
+
+userPool.signUp('nananpin', 'passworeed', attributeList, null, function(err, result){
+    if (err) return alert(err);
+    cognitoUser = result.user;
+    console.log('user name:', cognitoUser.getUsername());
+    console.log('Welcome! you are one step away to login to our system, please ask your admin to confirm your account');
+});
+</script>
+</html>
